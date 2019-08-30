@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SlidingLockView">
+        <attr name="slv_row" format="integer|reference"/>
+        <attr name="slv_radius" format="dimension|reference"/>
+        <attr name="slv_line_width" format="dimension|reference"/>
+        <attr name="slv_line_color" format="color|reference"/>
+        <attr name="slv_point_color" format="color|reference"/>
+    </declare-styleable>
+
+</resources>
