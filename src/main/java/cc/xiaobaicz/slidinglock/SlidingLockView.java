@@ -10,7 +10,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -256,14 +255,20 @@ public class SlidingLockView extends View {
                 case MotionEvent.ACTION_UP:
                     //离开
                     isDown = false;
+                    //结果处理事件,密码
+                    StringBuilder sb = new StringBuilder();
+                    int[] items = new int[mItems.size()];
+                    int index = 0;
+                    for (Item tmp : mItems){
+                        final int i = (int) ((tmp.x - mCoordinate) / mInterval) << 16 | (int) ((tmp.y - mCoordinate) / mInterval);
+                        sb.append(i);
+                        items[index++] = i;
+                    }
                     if(mOnSlidingListener != null){
-                        //结果处理事件,密码
-                        StringBuilder sb = new StringBuilder();
-                        for (Item tmp : mItems){
-                            sb.append((int)((tmp.x - mCoordinate) / mInterval) << 16 | (int)((tmp.y - mCoordinate) / mInterval));
-//                            sb.append((int)((tmp.x - mCoordinate) / mInterval) + (int)((tmp.y - mCoordinate) / mInterval) * mRow);
-                        }
                         mOnSlidingListener.onSliding(sb.toString(), mItems.size());
+                    }
+                    if(mOnSlidingComplete != null){
+                        mOnSlidingComplete.onComplete(items);
                     }
                     break;
             }
@@ -280,6 +285,12 @@ public class SlidingLockView extends View {
 
     public void setOnSlidingListener(OnSlidingListener listener){
         mOnSlidingListener = listener;
+    }
+
+    private OnSlidingComplete mOnSlidingComplete;
+
+    public void setOnSlidingListener(OnSlidingComplete listener){
+        mOnSlidingComplete = listener;
     }
 
     public void setLineColor(int color){
@@ -314,12 +325,22 @@ public class SlidingLockView extends View {
         isInvalidate = true;
     }
 
+    @Deprecated
     public interface OnSlidingListener{
         /**
          * 滑动结果返回
          * @param password 密码
          */
+        @Deprecated
         void onSliding(String password, int len);
+    }
+
+    public interface OnSlidingComplete{
+        /**
+         * 滑动结果返回
+         * @param items 密码坐标，高16位X，低16位Y
+         */
+        void onComplete(int[] items);
     }
 
     static class Item {
