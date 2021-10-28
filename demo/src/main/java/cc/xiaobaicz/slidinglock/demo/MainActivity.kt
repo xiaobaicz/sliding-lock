@@ -1,8 +1,8 @@
-package cc.xiaobaicz.slidinglock
+package cc.xiaobaicz.slidinglock.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import cc.xiaobaicz.slidinglock.databinding.ActivityMainBinding
+import cc.xiaobaicz.slidinglock.demo.databinding.ActivityMainBinding
 
 class MainActivity: AppCompatActivity() {
 

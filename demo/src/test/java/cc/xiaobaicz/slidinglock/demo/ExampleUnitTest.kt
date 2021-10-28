@@ -1,4 +1,4 @@
-package cc.xiaobaicz.slidinglock
+package cc.xiaobaicz.slidinglock.demo
 
 import org.junit.Test
 

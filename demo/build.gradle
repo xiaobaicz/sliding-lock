@@ -8,7 +8,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "cc.xiaobaicz.slidinglock"
+        applicationId "cc.xiaobaicz.slidinglock.demo"
         minSdk 21
         targetSdk 31
         versionCode 1
