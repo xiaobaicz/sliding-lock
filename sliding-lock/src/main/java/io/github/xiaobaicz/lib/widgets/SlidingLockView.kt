@@ -31,7 +31,7 @@ class SlidingLockView : View {
         private const val DEF_RADIUS = 32f
 
         // 默认画笔大小
-        private const val DEF_LINE_WIDTH = 10f
+        private const val DEF_LINE_WIDTH = 24f
 
         // 默认线条颜色
         private const val DEF_LINE_COLOR = 0xff000000.toInt()
@@ -53,11 +53,11 @@ class SlidingLockView : View {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.SlidingLockView, defStyleAttr, defStyleRes)
         for (i in 0..< typedArray.indexCount) {
             when (val index = typedArray.getIndex(i)) {
-                R.styleable.SlidingLockView_slv_row -> row = typedArray.getInteger(index, DEF_ROW)
-                R.styleable.SlidingLockView_slv_line_width -> lineWidth = typedArray.getDimension(index, DEF_LINE_WIDTH)
-                R.styleable.SlidingLockView_slv_line_color -> lineColor = typedArray.getColor(index, DEF_LINE_COLOR)
-                R.styleable.SlidingLockView_slv_point_color -> lockColor = typedArray.getColor(index, DEF_LOCK_COLOR)
-                R.styleable.SlidingLockView_slv_radius -> radius = typedArray.getDimension(index, DEF_RADIUS)
+                R.styleable.SlidingLockView_row -> row = typedArray.getInteger(index, DEF_ROW)
+                R.styleable.SlidingLockView_line_width -> lineWidth = typedArray.getDimension(index, DEF_LINE_WIDTH)
+                R.styleable.SlidingLockView_line_color -> lineColor = typedArray.getColor(index, DEF_LINE_COLOR)
+                R.styleable.SlidingLockView_lock_color -> lockColor = typedArray.getColor(index, DEF_LOCK_COLOR)
+                R.styleable.SlidingLockView_radius -> radius = typedArray.getDimension(index, DEF_RADIUS)
             }
         }
         typedArray.recycle()

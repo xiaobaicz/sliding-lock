@@ -2,11 +2,11 @@
 <resources>
 
     <declare-styleable name="SlidingLockView">
-        <attr name="slv_row" format="integer"/>
-        <attr name="slv_radius" format="dimension"/>
-        <attr name="slv_line_width" format="dimension"/>
-        <attr name="slv_line_color" format="color"/>
-        <attr name="slv_point_color" format="color"/>
+        <attr name="row" format="integer"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="line_width" format="dimension"/>
+        <attr name="line_color" format="color"/>
+        <attr name="lock_color" format="color"/>
     </declare-styleable>
 
 </resources>
