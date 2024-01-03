@@ -53,21 +53,11 @@ class SlidingLockView : View {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.SlidingLockView, defStyleAttr, defStyleRes)
         for (i in 0..< typedArray.indexCount) {
             when (val index = typedArray.getIndex(i)) {
-                R.styleable.SlidingLockView_slv_row -> {
-                    row = typedArray.getInteger(index, DEF_ROW)
-                }
-                R.styleable.SlidingLockView_slv_line_width -> {
-                    lineWidth = typedArray.getDimension(index, DEF_LINE_WIDTH)
-                }
-                R.styleable.SlidingLockView_slv_line_color -> {
-                    lineColor = typedArray.getColor(index, DEF_LINE_COLOR)
-                }
-                R.styleable.SlidingLockView_slv_point_color -> {
-                    lockColor = typedArray.getColor(index, DEF_LOCK_COLOR)
-                }
-                R.styleable.SlidingLockView_slv_radius -> {
-                    radius = typedArray.getDimension(index, DEF_RADIUS)
-                }
+                R.styleable.SlidingLockView_slv_row -> row = typedArray.getInteger(index, DEF_ROW)
+                R.styleable.SlidingLockView_slv_line_width -> lineWidth = typedArray.getDimension(index, DEF_LINE_WIDTH)
+                R.styleable.SlidingLockView_slv_line_color -> lineColor = typedArray.getColor(index, DEF_LINE_COLOR)
+                R.styleable.SlidingLockView_slv_point_color -> lockColor = typedArray.getColor(index, DEF_LOCK_COLOR)
+                R.styleable.SlidingLockView_slv_radius -> radius = typedArray.getDimension(index, DEF_RADIUS)
             }
         }
         typedArray.recycle()
@@ -204,8 +194,7 @@ class SlidingLockView : View {
             MotionEvent.ACTION_DOWN -> {
                 nodeList.clear()
                 val node = testing(current, lockNodes, radius)
-                if (node != null)
-                    nodeList.add(node)
+                node?.apply(nodeList::add)
             }
             MotionEvent.ACTION_MOVE -> {
                 val node = testing(current, lockNodes, radius)
@@ -215,9 +204,7 @@ class SlidingLockView : View {
             MotionEvent.ACTION_UP -> {
                 //结果处理事件,密码
                 isComplete = true
-                if (onSlidingComplete != null) {
-                    onSlidingComplete!!.onComplete(nodeList)
-                }
+                onSlidingComplete?.onComplete(nodeList)
             }
         }
         //通知刷新
@@ -232,9 +219,8 @@ class SlidingLockView : View {
                 (node.x + radius).toInt(), (node.y + radius).toInt(),
             )
             region.set(regionRect)
-            if (region.contains(current.x.toInt(), current.y.toInt())) {
+            if (region.contains(current.x.toInt(), current.y.toInt()))
                 return node
-            }
         }
         return null
     }

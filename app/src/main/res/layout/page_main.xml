@@ -7,7 +7,6 @@
     <io.github.xiaobaicz.lib.widgets.SlidingLockView
         android:id="@+id/lock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:slv_row="3"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
