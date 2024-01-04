@@ -58,3 +58,8 @@ class Main : FragmentActivity() {
 
 }
 ~~~
+
+<img width="320" alt="image" src="https://github.com/xiaobaicz/sliding-lock/assets/18556036/c0465704-8b5a-4023-ac10-3b0b4dbbc544">
+
+<img width="320" alt="image" src="https://github.com/xiaobaicz/sliding-lock/assets/18556036/58a7fbda-c821-495e-a413-5bd98300137d">
+
