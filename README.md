@@ -6,11 +6,10 @@ Provides a simple sliding password function
 ### Use
 ~~~ gradle
 dependencyResolutionManagement {
-	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-	repositories {
+  repositories {
     // ...
-		maven { url 'https://jitpack.io' }
-	}
+    maven { url 'https://jitpack.io' }
+  }
 }
 ~~~
 
@@ -51,7 +50,7 @@ class Main : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(bind.root)
 
-        // 滑动完成监听器
+        // Slide completion listener
         bind.lock.onSlidingComplete = SlidingLockView.OnSlidingComplete {
             println(it)
         }
