@@ -41,7 +41,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "io.github.xiaobaicz"
             artifactId = "sliding-lock"
-            version = "1.0.1"
+            version = "1.0.2"
 
             afterEvaluate {
                 from(components["release"])

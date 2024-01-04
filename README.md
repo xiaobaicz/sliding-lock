@@ -16,7 +16,7 @@ dependencyResolutionManagement {
 ~~~ gradle
 dependencies {
   // ...
-  implementation 'com.github.xiaobaicz:sliding-lock:1.0.1'
+  implementation 'com.github.xiaobaicz:sliding-lock:1.0.2'
 }
 ~~~
 
@@ -52,7 +52,7 @@ class Main : FragmentActivity() {
 
         // Slide completion listener
         bind.lock.onSlidingComplete = SlidingLockView.OnSlidingComplete {
-            println(it)
+            println(Password.toString(it))
         }
     }
 

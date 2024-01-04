@@ -26,6 +26,8 @@
 
         <activity android:name=".page.Main" />
 
+        <activity android:name=".page.Config"/>
+
     </application>
 
 </manifest>

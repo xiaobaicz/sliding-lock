@@ -46,6 +46,15 @@ class SlidingLockView : View {
         private val region = Region()
     }
 
+    data class Node(val id: Int, val x: Float, val y: Float)
+
+    fun interface OnSlidingComplete {
+        /**
+         * 滑动结果返回
+         */
+        fun onComplete(items: List<Node>)
+    }
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
@@ -61,6 +70,24 @@ class SlidingLockView : View {
             }
         }
         typedArray.recycle()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val modeW = MeasureSpec.getMode(widthMeasureSpec)
+        val modeH = MeasureSpec.getMode(heightMeasureSpec)
+        val sizeW = MeasureSpec.getSize(widthMeasureSpec)
+        val sizeH = MeasureSpec.getSize(heightMeasureSpec)
+        size = when {
+            //自适应 480px
+            modeW == MeasureSpec.AT_MOST && modeH == MeasureSpec.AT_MOST -> 480
+            //最大高度
+            modeW == MeasureSpec.AT_MOST && modeH == MeasureSpec.EXACTLY -> sizeH
+            //最大宽度
+            modeW == MeasureSpec.EXACTLY && modeH == MeasureSpec.AT_MOST -> sizeW
+            //取最小长度
+            else -> min(sizeW, sizeH)
+        }
+        setMeasuredDimension(size, size)
     }
 
     private val lockPaint = Paint().apply {
@@ -95,38 +122,51 @@ class SlidingLockView : View {
     //圈圈半径
     var radius: Float = DEF_RADIUS
 
+    private val linePath = Path()
+
+    private val current = PointF()
+
+    private var isComplete = false
+
     //所有选中的点
     private val nodeList = ArrayList<Node>()
 
     private val lockNodes = ArrayList<Node>()
 
+    var onSlidingComplete: OnSlidingComplete? = null
+
+    var lineColor = DEF_LINE_COLOR
+        set(value) {
+            field = value
+            linePaint.color = value
+            invalidate()
+        }
+
+    var lineWidth = DEF_LINE_WIDTH
+        set(value) {
+            field = value
+            linePaint.strokeWidth = value
+            invalidate()
+        }
+
+    var lockColor = DEF_LOCK_COLOR
+        set(value) {
+            field = value
+            lockPaint.color = value
+            invalidate()
+        }
+
     private fun updateLockNode() {
         val w = 1f * size / row
         val offset = w / 2
+        nodeList.clear()
         lockNodes.clear()
         repeat(row) { y ->
             repeat(row) { x ->
                 lockNodes.add(Node(y * row + x, x * w + offset, y * w + offset))
             }
         }
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val modeW = MeasureSpec.getMode(widthMeasureSpec)
-        val modeH = MeasureSpec.getMode(heightMeasureSpec)
-        val sizeW = MeasureSpec.getSize(widthMeasureSpec)
-        val sizeH = MeasureSpec.getSize(heightMeasureSpec)
-        size = when {
-            //自适应 480px
-            modeW == MeasureSpec.AT_MOST && modeH == MeasureSpec.AT_MOST -> 480
-            //最大高度
-            modeW == MeasureSpec.AT_MOST && modeH == MeasureSpec.EXACTLY -> sizeH
-            //最大宽度
-            modeW == MeasureSpec.EXACTLY && modeH == MeasureSpec.AT_MOST -> sizeW
-            //取最小长度
-            else -> min(sizeW, sizeH)
-        }
-        setMeasuredDimension(size, size)
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -152,8 +192,6 @@ class SlidingLockView : View {
             }
         }
     }
-
-    private val linePath = Path()
 
     private fun drawLine(canvas: Canvas) {
         canvas.save {
@@ -181,10 +219,6 @@ class SlidingLockView : View {
             restore()
         }
     }
-
-    private val current = PointF()
-
-    private var isComplete = false
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.actionIndex != 0) return super.dispatchTouchEvent(event)
@@ -225,33 +259,9 @@ class SlidingLockView : View {
         return null
     }
 
-    var onSlidingComplete: OnSlidingComplete? = null
-
-    var lineColor = DEF_LINE_COLOR
-        set(value) {
-            field = value
-            linePaint.color = value
-        }
-
-    var lineWidth = DEF_LINE_WIDTH
-        set(value) {
-            field = value
-            linePaint.strokeWidth = value
-        }
-
-    var lockColor = DEF_LOCK_COLOR
-        set(value) {
-            field = value
-            lockPaint.color = value
-        }
-
-    fun interface OnSlidingComplete {
-        /**
-         * 滑动结果返回
-         */
-        fun onComplete(items: List<Node>)
+    fun clean() {
+        nodeList.clear()
+        invalidate()
     }
-
-    data class Node(val id: Int, val x: Float, val y: Float)
 
 }

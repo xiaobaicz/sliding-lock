@@ -44,4 +44,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(project(":sliding-lock"))
+
+    implementation("com.tencent:mmkv:1.3.2")
+
+    implementation("com.github.xiaobai-cz.store:store:1.0.4")
+    implementation("com.github.xiaobai-cz.store:store-mmkv:1.0.4")
+    implementation("com.github.xiaobai-cz.store:store-serialize-gson:1.0.4")
 }
